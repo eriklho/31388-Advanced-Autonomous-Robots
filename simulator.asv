@@ -16,15 +16,11 @@ table2 =[];
 
 printStar()
 clear;
-printSquare()
-clear;
-printHex()
-clear;
 
 %%%%%%%%%%NOTE: After each function, buffers has to be cleares, because the
 %%%%%%%%%%same array using everyhere%%%%%%%%%%%
 
-%%%%%%%%%% Function draws the star %%%%%%%%%%
+%%%%%%%%%% Function draw the star %%%%%%%%%%
 function printStar()
 global table1;
 for v=1:5
@@ -39,8 +35,6 @@ for i=1:length(table1)
 end
 end
 
-
-%%%%%%%%%% Function draws the hexagon %%%%%%%%%%
 function printHex()
 global table1;
 for v=1:6
@@ -56,7 +50,6 @@ end
 
 end
 
-%%%%%%%%%% Function draws the square %%%%%%%%%%
 function printSquare()
 global table1;
 
