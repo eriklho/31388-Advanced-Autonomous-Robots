@@ -23,7 +23,7 @@ clear;
 
 %%%%%%%%%%NOTE: After each function, buffers has to be cleares, because the
 %%%%%%%%%%same array using everyhere%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% Function draws the star %%%%%%%%%%
 function printStar()
 global table1;
