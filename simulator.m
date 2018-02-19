@@ -6,24 +6,48 @@ global linear_vel;
 global table1;
 global table2;
 
+
 curr_pose = [0;0;0]; % current position [ x, y, theta]
 Rpar = [0.26;0.035;0.035]; % [wheel separation, right wheel radius, left wheel radius]  
 ts = 0.01; % time stamp
 linear_vel = []; %[right wheel linear vel, left wheel linear vel]
 table1 =[];
 table2 =[];
+target = [[0.5; 0; 0],[0.5;0.5;0],[0.5;-0.5;-pi/2],...
+    [0;0.5;-pi],[0;0;pi/2],[0;-0.5;0],...
+    [-0.5;0.5;0],[-0.5;0;0],[-0.5;-0.5;-pi]];
 
 
-printStar()
-clear;
-printSquare()
-clear;
-printHex()
-clear;
+follTarget(target)
 
-%%%%%%%%%%NOTE: After each function, buffers has to be cleares, because the
-%%%%%%%%%%same array using everyhere%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function follTarget(target)
+global curr_pose ;
+global table1;
+for z = 1:length(target)        
+    curr_x = curr_pose(1,1)
+    curr_y = curr_pose(2,1)
+    curr_theta = curr_pose(3,1)
+  
+    targ_x = target(1,z)
+    targ_y = target(2,z)
+    angle = atan((targ_y - curr_y)/(targ_x- curr_x));
+    targ_theta = -angle + target(3,z)
+    
+    dist = sqrt((targ_x - curr_x)^2 + (targ_y - curr_y)^2)
+    
+    turn(targ_theta, 0.05); 
+    forward(dist,1);
+    
+    figure;
+    hold on
+    for i=1:length(table1)
+        plot(table1(i), table1(i,2), 'o')
+    end
+end   
+end
+
+
+ 
 %%%%%%%%%% Function draws the star %%%%%%%%%%
 function printStar()
 global table1;
@@ -38,8 +62,6 @@ for i=1:length(table1)
    plot(table1(i), table1(i,2), 'o')
 end
 end
-
-
 %%%%%%%%%% Function draws the hexagon %%%%%%%%%%
 function printHex()
 global table1;
@@ -55,7 +77,6 @@ for i=1:length(table1)
 end
 
 end
-
 %%%%%%%%%% Function draws the square %%%%%%%%%%
 function printSquare()
 global table1;
@@ -98,27 +119,30 @@ global curr_pose ;
 global Rpar; 
 global ts;
 global linear_vel;
-global table2;
+global table1;
 theta = curr_pose(3,1); % theta from global position
  %  turn angle constraint in radians
-
+if rads_turn > pi*2
+    rads_turn = rem(rads_turn, pi*2);
+end
 if rads_turn < 0
-    rads = theta - rads_turn;
     linear_vel = [-speed;speed];    
 end
 if rads_turn > 0
-     rads = theta + rads_turn;
      linear_vel = [speed;-speed];
 end
 
-    while abs(theta) < rads
+
+    while abs(theta) < abs(rads_turn)
         y = kinupdate(curr_pose,Rpar,ts, linear_vel);
         curr_pose = y;
         theta = curr_pose(3,1);
-        table2(end+1,:) = [y(1,1) y(2,1) y(3,1)];    
+        table1(end+1,:) = [y(1,1) y(2,1) y(3,1)];   
     end
+
 end
   
+
 
 %%%%%% Function makes move on one time stamp %%%%%%%
 function new_pose = kinupdate(pose,robotpar,ts,wheelspeed) % pose - global postion [ x, y, theta]
@@ -162,5 +186,6 @@ end
 %         
 % end
  
+
 
 
