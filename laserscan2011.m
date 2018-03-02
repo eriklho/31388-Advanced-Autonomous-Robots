@@ -40,7 +40,7 @@ resolrad=resol*pi/180.0;
 [m, no_of_lines] = size(lines); % Totalt antal linier - Total num. of lines
 
 % ---------------------------------------------------
-% Præ-allokering af arrays - Preallocation of arrays
+% Pre-allokering af arrays - Preallocation of arrays
 % ---------------------------------------------------
 
 % Global system coordinates

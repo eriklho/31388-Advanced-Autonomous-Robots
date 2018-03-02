@@ -6,7 +6,7 @@
 % requirements will be white and the rest black
 % 
 function x=boxfilter(imgname,u_range,v_range)
-clf
+%clf
 m=imread(imgname);
 subplot(1,2,1)
 imshow(m)
