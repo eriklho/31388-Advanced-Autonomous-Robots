@@ -19,9 +19,14 @@ scan3 = laserscan2011(pose3(1), pose3(2), pose3(3), lines, maxD, res,FOV);
 
 
 
-world_pose1 = laser2world_pose(pose1, polar2carth(scan1));
-world_pose2 = laser2world_pose(pose2, polar2carth(scan2));
-world_pose3 = laser2world_pose(pose3, polar2carth(scan3));
+world_pose1 = laser2world_pose(pose1, pol2cart(scan1));
+world_pose2 = laser2world_pose(pose2, pol2cart(scan2));
+world_pose3 = laser2world_pose(pose3, pol2cart(scan3));
+
+figure
+plot(world_pose1(1,:), world_pose1(2,:), '.r', world_pose2(1,:), world_pose2(2,:), '.b', scan3world_pose3_w(1,:), world_pose3(2,:), '.g')
+grid
+hold on
 
 figure
 subplot(2,2,1)

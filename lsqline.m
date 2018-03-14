@@ -15,20 +15,19 @@ function [alpha,r] = lsqline(points)
 	xy_sum = x*y';
 	
 	
-	alpha = atan2((2*x_sum*y_sum)-(2*n*xy_sum),x_sum^2-y_sum^2-n*x_x+n*y_y/2);
-	
+	alpha = atan2((2*x_sum*y_sum)-(2*n*xy_sum),x_sum^2-y_sum^2-n*x_x+n*y_y)/2;	
 	
 	
 	r = x_avg*cos(alpha)+y_avg*sin(alpha);
 	
 	if r < 0
-    r = r*-1;
+		r = r*-1;
 
-    if alpha < 0
-        alpha = alpha+pi;
-    else 
-        alpha = alpha-pi;
-    
+		if alpha < 0
+			alpha = alpha+pi;
+		else 
+			alpha = alpha-pi;
+		end
     end
 end
 
