@@ -1,7 +1,7 @@
 clc; clear all; close all;
 
 % obstacle = [3 -4 3 1]';
-lines= [0 1 2.5 1; 2.5 1 2.5 5; 0 -1 3.5 -1; 3.5 -1 3.5 5]';
+lines = [0 2.5 0 3.5; 1 1 -1 -1; 2.5 2.5 3.5 3.5; 1 5 -1 5];
 
 % Laser specification 
 maxD= 4;
@@ -9,28 +9,32 @@ FOV = 180;
 res = 0.36;
 
 
-x_w = 1.5;
-y_w = 0;
-theta_w = pi/6;
+pose1 = [0 0 0];
+pose2 = [1.0, 0,0];
+pose3 = [1.5,0,pi/6];
 
-world_pose = [x_w, y_w, theta_w]';
+scan1 = laserscan2011(pose1(1), pose1(2), pose1(3), lines, maxD, res,FOV);
+scan2 = laserscan2011(pose2(1), pose2(2), pose2(3), lines, maxD, res,FOV);
+scan3 = laserscan2011(pose3(1), pose3(2), pose3(3), lines, maxD, res,FOV);
 
-scan = laserscan2011(x_w, y_w, theta_w, lines, maxD, res,FOV);
 
-% figure
-%  polar(scan(1,:),scan(2,:))
-% hold on
-% figure
-[x_l, y_l] = pol2cart(scan(1,:),scan(2,:));
-laser_pose = [x_l; y_l];
-plot(x_l,y_l)
 
-hold on;
-grid;
-world_pose = laser2world_pose(world_pose, laser_pose);
-plot(world_pose(1,:),world_pose(2,:))
-legend('Robot view', 'World view');
-axis([0,4,-4,4])
+world_pose1 = laser2world_pose(pose1, polar2carth(scan1));
+world_pose2 = laser2world_pose(pose2, polar2carth(scan2));
+world_pose3 = laser2world_pose(pose3, polar2carth(scan3));
+
+figure
+subplot(2,2,1)
+plot(world_pose1(1,:), world_pose1(2,:), '.r')
+grid
+subplot(2,2,2)
+plot(world_pose2(1,:), world_pose2(2,:), '.b')
+grid
+subplot(2,2,3)
+plot(world_pose3(1,:), world_pose3(2,:), '.g')
+grid
+
+
 
 
 
