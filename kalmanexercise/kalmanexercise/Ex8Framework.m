@@ -1,4 +1,4 @@
-clear all
+clear all; clc;
 
 addpath([pwd filesep 'extras'])
 addpath([pwd filesep 'yourScripts'])
@@ -9,6 +9,7 @@ global realPose
 
 %% Constants
 constants % Calling the script with the constants
+
 
 %% Run
 realPose = pose + randn(3,1).*sqrt([poseCov(1,1); poseCov(2,2); poseCov(3,3)]); %Generate a real pose based on the initial uncertainty
@@ -60,8 +61,10 @@ for iter = 1:noOfIter
     
     %get a scan if the laser scan period has passed
     if(mod(iter,lsrPer) == 0)
+		
+		lsrRelPose = [pose(1) pose(2)+.3 pose(3)]; % Revisit to see if it's the correct pose to inherit
 
-        % Calculate the real pose of the laser scanner to use with the 
+        %Calculate the real pose of the laser scanner to use with the 
         %laserscan function. Note that addPose is a coordinate
         %transformation, not a vector addition
         lsrRealPose = addPose(realPose,lsrRelPose); 

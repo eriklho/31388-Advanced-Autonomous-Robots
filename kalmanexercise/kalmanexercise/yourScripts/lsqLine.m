@@ -28,6 +28,6 @@ function [alpha,r] = lsqline(points)
 		else 
 			alpha = alpha-pi;
 		end
-    end
+	end
 end
 
